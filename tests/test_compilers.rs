@@ -1,4 +1,4 @@
-use valve_compilers::{Compiler, CompilerArg};
+use valve_compilers::Compiler;
 use valve_compilers::vbsp::{Vbsp, VbspArg};
 
 /// Test 1.1: Validate the static metadata of a specific compiler.

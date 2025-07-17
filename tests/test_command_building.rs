@@ -1,4 +1,4 @@
-use valve_compilers::{Compiler, CompilerContext, CommandInfo};
+use valve_compilers::{Compiler, CompilerContext};
 use valve_compilers::vbsp::{Vbsp, VbspArg};
 use std::path::PathBuf;
 

@@ -1,4 +1,4 @@
-use valve_compilers::{CompilerArg, ParseArgError};
+use valve_compilers::ParseArgError;
 use valve_compilers::vbsp::VbspArg;
 use std::convert::TryFrom;
 use std::path::PathBuf;
