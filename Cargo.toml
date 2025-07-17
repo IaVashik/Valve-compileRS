@@ -11,8 +11,15 @@ documentation = "https://docs.rs/valve_compilers"
 keywords = ["valve", "source-engine", "gamedev", "build-tool", "compiler"]
 categories = ["game-development", "development-tools::build-utils"]
 
-# [lints.rust]
-# unused = { level = "allow", priority = -1 } # For exploratory dev.
+include = [
+    "src/",
+    "compiler_configs/",
+    "build.rs",
+    "Cargo.toml",
+    "Cargo.lock",
+    "LICENSE",
+    "README.md",
+]
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"], optional = true }
