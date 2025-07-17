@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/user-attachments/assets/690cc292-5c6e-4985-8f5d-e0c8c3f3cdb1" alt="Valve-CompileRS Logo" width="35%">
+<img src="branding/logo.png" alt="Valve-CompileRS Logo" width="35%">
 
 [![Crates.io](https://img.shields.io/crates/v/valve_compilers.svg)](https://crates.io/crates/valve_compilers)
 [![Docs.rs](https://docs.rs/valve_compilers/badge.svg)](https://docs.rs/valve_compilers)
