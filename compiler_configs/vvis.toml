@@ -1,0 +1,75 @@
+name = "VVIS"
+is_builtin = false
+description = "Performs visibility tests for optimization."
+working_dir = "$binDir"
+base_arguments = "-game $gameDir $mapPath"
+
+[[parameters]]
+name = "Game Directory"
+description = "Specifies the game directory."
+argument = "-game"
+value_type = "path"
+default_value = "$gameDir"
+is_default = true
+
+[[parameters]]
+name = "Map File"
+description = "The BSP file to process."
+argument = ""
+value_type = "path"
+default_value = "$mapPath"
+is_default = true
+
+[[parameters]]
+name = "Fast"
+description = "Only do a quick first pass. Does not actually test visibility."
+argument = "-fast"
+value_type = "flag"
+
+[[parameters]]
+name = "Radius Override"
+description = "Force a maximum vis radius, in units, regardless of whether an env_fog_controller specifies one."
+argument = "-radius_override"
+value_type = "integer"
+
+[[parameters]]
+name = "No Sort"
+description = "Don't sort portals."
+argument = "-nosort"
+value_type = "flag"
+
+[[parameters]]
+name = "Temp In"
+description = "Read portals from /tmp/mapname."
+argument = "-tmpin"
+value_type = "flag"
+
+[[parameters]]
+name = "Temp Out"
+description = "Write portals to /tmp/mapname."
+argument = "-tmpout"
+value_type = "flag"
+
+[[parameters]]
+name = "Threads"
+description = "Override the number of CPU threads used."
+argument = "-threads"
+value_type = "integer"
+
+[[parameters]]
+name = "Low Priority "
+description = "Force VVIS to run as a low-priority process."
+argument = "-low"
+value_type = "flag"
+
+[[parameters]]
+name = "Normal Priority"
+description = "Run process with a normal process priority (be default below normal). Will prevent process from getting run on an efficiency core for certain CPUs. **Warning**: Using above normal process priority can cause other applications to become slow/unresponsive"
+argument = "-normal_priority"
+value_type = "flag"
+
+[[parameters]]
+name = "Verbose"
+description = "Turn on verbose output for debug purposes."
+argument = "-verbose"
+value_type = "flag"

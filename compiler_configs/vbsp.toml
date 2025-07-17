@@ -1,0 +1,228 @@
+name = "VBSP"
+is_builtin = false
+description = "BSP Compiler for Source Engine"
+working_dir = "$binDir"
+
+[[parameters]]
+name = "Game Directory"
+description = "Specifies the game directory."
+argument = "-game"
+value_type = "path"
+default_value = "$gameDir"
+is_default = true
+
+[[parameters]]
+name = "Map File"
+description = "The VMF file to compile."
+argument = ""
+value_type = "path"
+default_value = "$mapPath"
+is_default = true
+
+[[parameters]]
+name = "Only Entities"
+description = "Only import the entities from the VMF. Brushes and internal entities are not modified. Conserves existing lighting data."
+argument = "-onlyents"
+value_type = "flag"
+
+[[parameters]]
+name = "Only Props"
+description = "Only update static and detail props (i.e. the internal entities). **Warning**: Does not generate a .prt file, making VVIS fail!"
+argument = "-onlyprops"
+value_type = "flag"
+
+[[parameters]]
+name = "No Detail"
+description = "Compiles without func_detail brushes."
+argument = "-nodetail"
+value_type = "flag"
+
+[[parameters]]
+name = "No T-Junc"
+description = "Don't fixup any t-junctions."
+argument = "-notjunc"
+value_type = "flag"
+
+[[parameters]]
+name = "Nodraw triggers"
+description = "Treat trigger faces as if they were textured with nodraw, saving a small amount of lightmap space at the expense of debugability. Only affects triggers using %compiletrigger. Func_occluders should use toolsoccluder instead of toolstrigger, to avoid issues."
+argument = "-nodrawtriggers"
+value_type = "flag"
+
+[[parameters]]
+name = "Allow Detail Cracks"
+description = "Don't fixup t-junctions on func_detail."
+argument = "-allowdetailcracks"
+value_type = "flag"
+
+[[parameters]]
+name = "No Water"
+description = "Compiles without water brushes."
+argument = "-nowater"
+value_type = "flag"
+
+[[parameters]]
+name = "Leak Test"
+description = "Stop compiling if a leak is detected. **Warning**: Not supported on newer Source."
+argument = "-leaktest"
+value_type = "flag"
+
+[[parameters]]
+name = "Micro Volume Test"
+description = "VBSP will warn when brushes are output with a volume less than this number (default: 1.0)."
+argument = "-micro"
+value_type = "float"
+default_value = "1.0"
+
+[[parameters]]
+name = "All Detail"
+description = "Make all geometry func_detail to improve VVIS times. Use with a radius override of 2500 in VVIS. **Warning**: Support varies between versions of source."
+argument = "-alldetail"
+value_type = "flag"
+
+[[parameters]]
+name = "Full Detail"
+description = "Mark all detail geometry as normal geometry (so all detail geometry will affect visibility)."
+argument = "-fulldetail"
+value_type = "flag"
+
+[[parameters]]
+name = "Normal Priority"
+description = "Run process with a normal process priority (be default below normal). Will prevent process from getting run on an efficiency core for certain CPUs. **Warning**: Using above normal process priority can cause other applications to become slow/unresponsive"
+argument = "-normal_priority"
+value_type = "flag"
+
+[[parameters]]
+name = "Verbose"
+description = "Turn on verbose output for debug purposes."
+argument = "-verbose"
+value_type = "flag"
+
+[[parameters]]
+name = "Static Prop Combine"
+description = "Merges static props together according to the rules defined in scripts/hammer/spcombinerules/spcombinerules.txt."
+argument = "-staticpropcombine"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine - Keep Sources"
+description = "Don't clean up cluster models after bspzip."
+argument = "-keepsources"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine - Consider VIS"
+description = "Cluster static prop models only within vis clusters."
+argument = "-staticpropcombine_considervis"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine - Autocombine"
+description = "Automatically combine simple static props without an explicit combine rule."
+argument = "-staticpropcombine_autocombine"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine - Suggest Rules"
+description = "Suggest rules to add to spcombinerules.txt"
+argument = "-staticpropcombine_suggestrules"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine - Min Instances"
+description = "Set the minimum number of props in a combine group required to create a combined prop."
+argument = "-staticpropcombine_mininstances"
+value_type = "integer"
+default_value = "3"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine - Print Combine Rules"
+description = "Prints the combine rules"
+argument = "-staticpropcombine_printcombinerules"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine - Color Instances"
+description = "Instances of combined props get colored"
+argument = "-staticpropcombine_colorinstances"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine Ignore - Fast Reflection"
+description = "Combine props, even if they have differing Render in Fast Reflections settings."
+argument = "-combineignore_fastreflection"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine Ignore - Normals"
+description = "Combine props, even if they have differing Ignore Normals settings."
+argument = "-combineignore_normals"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine Ignore - No Shadow"
+description = "Combine props, even if they have differing Disable Shadows settings."
+argument = "-combineignore_noshadow"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine Ignore - No Vertex Lighting"
+description = "Combine props, even if they have differing Disable Vertex lighting settings."
+argument = "-combineignore_novertexlighting"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine Ignore - No Flashlight"
+description = "Combine props, even if they have differing Disable flashlight settings."
+argument = "-combineignore_noflashlight"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine Ignore - No Self Shadowing"
+description = "Combine props, even if they have differing Disable Self-Shadowing settings."
+argument = "-combineignore_noselfshadowing"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Static Prop Combine Ignore - Disable Shadow Depth"
+description = "Combine props, even if they have differing Disable ShadowDepth settings."
+argument = "-combineignore_disableshadowdepth"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730]
+
+[[parameters]]
+name = "Allow Dynamic Props As Static"
+description = "Allow all models with the 'static' flag in the model viewer to be used on prop_static, even when their propdata doesn't contain 'allowstatic'."
+argument = "-allowdynamicpropsasstatic"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [4000]

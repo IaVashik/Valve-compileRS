@@ -1,0 +1,104 @@
+name = "GAME"
+is_builtin = false
+description = "Launch the game with your map."
+working_dir = "$binDir"
+
+[[parameters]]
+name = "Game Directory"
+description = "Specifies the game directory."
+argument = "-game"
+value_type = "path"
+default_value = "$gameDir"
+is_default = true
+
+[[parameters]]
+name = "Map Name"
+description = "The name of the map to load."
+argument = "+map"
+value_type = "string"
+default_value = "$mapName"
+is_default = true
+
+[[parameters]]
+name = "Tools"
+description = "Enables engine tools. **Warning**: Can cause lighting errors in game."
+argument = "-tools"
+value_type = "flag"
+
+[[parameters]]
+name = "No Video"
+description = "Disables the intro video when launching."
+argument = "-novid"
+value_type = "flag"
+
+[[parameters]]
+name = "Developer Mode"
+description = "Disables the automatic loading of menu background maps and stops the quit dialog from appearing on exit."
+argument = "-dev"
+value_type = "flag"
+
+[[parameters]]
+name = "Console"
+description = "Starts the game with the console enabled."
+argument = "-console"
+value_type = "flag"
+
+[[parameters]]
+name = "Windowed"
+description = "Loads game in windowed mode."
+argument = "-windowed"
+value_type = "flag"
+
+[[parameters]]
+name = "Window Width"
+description = "Sets window resolution width."
+argument = "-width"
+value_type = "integer"
+
+[[parameters]]
+name = "Window Height"
+description = "Sets window resolution height."
+argument = "-height"
+value_type = "integer"
+
+[[parameters]]
+name = "No border"
+description = "Removes the window border in windowed mode."
+argument = "-noborder"
+value_type = "flag"
+
+[[parameters]]
+name = "Hijack"
+description = "Hijacks the current game process rather than launching a second one."
+argument = "-hijack"
+value_type = "flag"
+
+[[parameters]]
+name = "Insecure"
+description = "Runs the game in insecure mode. **Warning**: May cause issues with multiplayer servers."
+argument = "-insecure"
+value_type = "flag"
+
+[[parameters]]
+name = "Make Dev Shots"
+description = "Takes point_devshot_camera screenshots automatically. **Warning**: -dev recommended to be off."
+argument = "-makedevshots"
+value_type = "flag"
+
+[[parameters]]
+name = "Cheats"
+description = "Enables game cheats. **Warning**: Dangerous to use in multiplayer games."
+argument = "+sv_cheats 1"
+value_type = "flag"
+
+[[parameters]]
+name = "Disable Freeze Time"
+description = "Disables the freeze time at the start of rounds."
+argument = "+mp_enableroundwaittime 0"
+value_type = "flag"
+
+[[parameters]]
+name = "Command Line Argument"
+description = "Passes value as a command line argument"
+argument = ""
+value_type = "string"

@@ -1,0 +1,42 @@
+name = "VPK"
+is_builtin = false
+description = "Valve Pack File Compiler"
+working_dir = ""
+
+[[parameters]]
+name = "File Path"
+description = "File path to VPK file or response file directory."
+argument = ""
+value_type = "path"
+default_value = "$filePath"
+is_default = true
+
+[[parameters]]
+name = "List"
+description = "Lists contents of VPK file"
+argument = "l"
+value_type = "flag"
+
+[[parameters]]
+name = "Extract"
+description = "Extracts VPK file"
+argument = "x"
+value_type = "flag"
+
+[[parameters]]
+name = "Extract File"
+description = "Extracts specified file from VPK file"
+argument = "e"
+value_type = "string"
+
+[[parameters]]
+name = "Create Archive"
+description = "Create new VPK archive"
+argument = "a"
+value_type = "flag"
+
+[[parameters]]
+name = "Response File"
+description = "File list for packing"
+argument = "@"
+value_type = "path"

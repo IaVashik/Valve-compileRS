@@ -1,0 +1,38 @@
+[package]
+name = "valve_compilers"
+version = "1.0.0"
+edition = "2024"
+authors = ["laVashik <contact@lavashik.lol>"]
+description = "A type-safe, ergonomic, and extensible library for building command-line arguments for Valve's Source Engine compiler tools."
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/IaVashik/Valve-compileRS"
+documentation = "https://docs.rs/valve_compilers"
+keywords = ["valve", "source-engine", "gamedev", "build-tool", "compiler"]
+categories = ["game-development", "development-tools::build-utils"]
+
+# [lints.rust]
+# unused = { level = "allow", priority = -1 } # For exploratory dev.
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"], optional = true }
+strum = { version = "0.26", optional = true}
+strum_macros = { version = "0.26", optional = true}
+
+[build-dependencies]
+quote = "1.0"
+heck = "0.5"
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.8"
+glob = "0.3"
+proc-macro2 = "1.0.95"
+prettyplease = "0.2.35"
+syn = "2.0.104"
+
+[dev-dependencies]
+serde_json = "1.0"
+
+[features]
+default = []
+serialization = ["dep:serde"]
+enum_iter = ["dep:strum", "dep:strum_macros"]

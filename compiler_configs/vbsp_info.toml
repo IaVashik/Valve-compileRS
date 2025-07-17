@@ -1,0 +1,6 @@
+name = "VBSP Info"
+is_builtin = false
+description = "Outputs statistics similar to those of VRAD."
+working_dir = "$binDir"
+base_arguments = "-treeinfo $mapCopyLocation"
+parameters = []

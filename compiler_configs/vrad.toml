@@ -1,0 +1,200 @@
+name = "VRAD"
+is_builtin = false
+description = "Generates static lighting."
+working_dir = "$binDir"
+base_arguments = "-game $gameDir $mapPath"
+
+[[parameters]]
+name = "Game Directory"
+description = "Specifies the game directory."
+argument = "-game"
+value_type = "path"
+default_value = "$gameDir"
+is_default = true
+
+[[parameters]]
+name = "Map File"
+description = "The BSP file to light."
+argument = ""
+value_type = "path"
+default_value = "$mapPath"
+is_default = true
+
+[[parameters]]
+name = "Bounces"
+description = "Set the maximum number of light ray bounces"
+argument = "-bounce"
+value_type = "integer"
+
+[[parameters]]
+name = "LDR"
+description = "Compile with LDR"
+argument = "-ldr"
+value_type = "flag"
+[parameters.constraints]
+incompatible_games = [730, 550] # csgo, l4d2
+
+[[parameters]]
+name = "HDR"
+description = "Compile with HDR"
+argument = "-hdr"
+value_type = "flag"
+
+[[parameters]]
+name = "Both"
+description = "Compile with HDR and LDR."
+argument = "-both"
+value_type = "flag"
+[parameters.constraints]
+incompatible_games = [730, 550] # csgo, l4d2
+
+[[parameters]]
+name = "Fast"
+description = "Fast lighting"
+argument = "-fast"
+value_type = "flag"
+
+[[parameters]]
+name = "Final"
+description = "Increases the quality of light_environment and indirect lighting by spending more time firing rays."
+argument = "-final"
+value_type = "flag"
+
+[[parameters]]
+name = "Extra Sky"
+description = "Trace N times as many rays for indirect light and sky ambient. Normal default is 1; -final default is 16"
+argument = "-extrasky"
+value_type = "integer"
+
+[[parameters]]
+name = "Lights File"
+description = "Load a custom lights (RAD) file in addition to lights.rad and map-specific lights file."
+argument = "-lights"
+value_type = "path"
+
+[[parameters]]
+name = "Smooth"
+description = "Set the smoothing threshold for brush faces without smoothing groups, in degrees."
+argument = "-smooth"
+value_type = "float"
+
+[[parameters]]
+name = "Luxel Density"
+description = "Scale down luxels. Maximum value is 1. **Warning**: Too low a value can cause lighting errors."
+argument = "-luxeldensity"
+value_type = "float"
+constraints = { max_value = 1.0 }
+
+[[parameters]]
+name = "Static Prop Lighting"
+description = "Generate per-vertex prop_static lighting **Warning**: always enabled for light_spot entities."
+argument = "-StaticPropLighting"
+value_type = "flag"
+
+[[parameters]]
+name = "Static Prop Lighting Final"
+description = "Generate per-vertex prop_static lighting (uses higher/final quality processing) **Warning**: always enabled when compiling with -final"
+argument = "-StaticPropLightingFinal"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730] # csgo
+
+[[parameters]]
+name = "Static Prop Lighting Old"
+description = "Generate per-vertex prop_static lighting using the old algorithm"
+argument = "-StaticPropLightingOld"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730] # csgo
+
+[[parameters]]
+name = "Static Prop Bounce"
+description = "Enable static props to bounce light."
+argument = "-StaticPropBounce"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [730] # csgo
+
+[[parameters]]
+name = "Static Prop Sample Scale"
+description = "Controls quality of static prop lighting (16 = slow, high quality, 4 = default and 0.25 = fast, low quality). **Warning**: Note that adding -final is the same as having -StaticPropSampleScale 16."
+argument = "-StaticPropSampleScale"
+value_type = "integer"
+[parameters.constraints]
+compatible_games = [730] # csgo
+
+[[parameters]]
+name = "Static Prop Polys"
+description = "Generate lighting on props at polygon precision."
+argument = "-StaticPropPolys"
+value_type = "flag"
+
+[[parameters]]
+name = "Static Prop Lighting Only"
+description = "Only perform direct static prop lighting."
+argument = "-OnlyStaticProps"
+value_type = "flag"
+
+[[parameters]]
+name = "No self-shadowing props"
+description = "Globally disable self-shadowing on static props"
+argument = "-nossprops"
+value_type = "flag"
+
+[[parameters]]
+name = "Texture Shadows"
+description = "Generates lightmap shadows from $alphatest and $translucent surfaces of models. (Not brushes) **Warning**: Models must be compiled with casttextureshadows or be listed with forcetextureshadow in the lights file"
+argument = "-TextureShadows"
+value_type = "flag"
+
+[[parameters]]
+name = "AO Scale"
+description = "Scales the amount of baked AO"
+argument = "-aoscale"
+value_type = "float"
+[parameters.constraints]
+compatible_games = [730] # csgo
+
+[[parameters]]
+name = "Threads"
+description = "Override the number of CPU threads used."
+argument = "-threads"
+value_type = "integer"
+
+[[parameters]]
+name = "Low Priority "
+description = "Force VRAD to run as a low-priority process."
+argument = "-low"
+value_type = "flag"
+
+[[parameters]]
+name = "Normal Priority"
+description = "Run process with a normal process priority (be default below normal). Will prevent process from getting run on an efficiency core for certain CPUs. **Warning**: Using above normal process priority can cause other applications to become slow/unresponsive"
+argument = "-normal_priority"
+value_type = "flag"
+
+[[parameters]]
+name = "Disable Skybox Recursion"
+description = "Turn off recursion into 3d skybox (skybox shadows on world)."
+argument = "-noskyboxrecurse"
+value_type = "flag"
+
+[[parameters]]
+name = "Dump Prop Lightmaps"
+description = "Dump TGA versions of the lightmaps generated for prop_static models."
+argument = "-dumppropmaps"
+value_type = "flag"
+[parameters.constraints]
+compatible_games = [240, 300, 320, 360, 440, 17740, 243750, 265630, 723390] # CSS, DODS, HL2DM, HLDMS, TF2, Empires, SDK Base 2013 Multiplayer, Fistful of Frags, HDTF
+
+[[parameters]]
+name = "No Extra"
+description = "Disable supersampling. This will lead to blockier, less accurate lighting"
+argument = "-noextra"
+value_type = "flag"
+
+[[parameters]]
+name = "Verbose"
+description = "Turn on verbose output for debug purposes."
+argument = "-verbose"
+value_type = "flag"
