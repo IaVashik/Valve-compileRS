@@ -1,4 +1,4 @@
-use valve_compilers::Compiler;
+use valve_compilers::{Compiler, CompilerArg};
 use valve_compilers::vbsp::{Vbsp, VbspArg};
 
 /// Test 1.1: Validate the static metadata of a specific compiler.
@@ -10,7 +10,6 @@ fn test_vbsp_metadata() {
     assert_eq!(compiler.description(), "BSP Compiler for Source Engine");
     assert_eq!(compiler.working_dir_template(), "$binDir");
 
-    // Test the get_metadata() convenience method
     let metadata = compiler.get_metadata();
     assert_eq!(metadata.name, "VBSP");
 }
@@ -21,9 +20,9 @@ fn test_vbsp_default_arguments() {
     let compiler = Vbsp::default();
     let default_args = compiler.get_args();
 
-    // Check that the default args list contains the expected arguments.
-    assert!(!default_args.is_empty());
-    // todo
+    assert_eq!(default_args.len(), 2);
+    assert!(matches!(default_args[0], VbspArg::GameDirectory(_)));
+    assert!(matches!(default_args[1], VbspArg::MapFile(_)));
 }
 
 /// Test 1.3: Validate the build_args() logic for a compiler instance.
@@ -31,22 +30,26 @@ fn test_vbsp_default_arguments() {
 fn test_vbsp_build_args() {
     let mut compiler = Vbsp::new();
 
-    // Test with an empty list
-    assert_eq!(compiler.build_args().trim(), "");
+    assert!(compiler.build_args().is_empty());
 
-    // Add arguments
     compiler.add_arg(VbspArg::NoDetail);
     compiler.add_arg(VbspArg::StaticPropCombineMinInstances(5));
     compiler.add_arg(VbspArg::Verbose);
 
-    // Test with a populated list
-    let expected = "-nodetail -staticpropcombine_mininstances 5 -verbose";
+    let expected: Vec<String> = vec![
+        "-nodetail",
+        "-staticpropcombine_mininstances",
+        "5",
+        "-verbose",
+    ]
+    .into_iter()
+    .map(String::from)
+    .collect();
     let built_args = compiler.build_args();
-    assert_eq!(built_args.trim(), expected);
+    assert_eq!(built_args, expected);
 
-    // Test clearing arguments
     compiler.clear_args();
-    assert_eq!(compiler.build_args().trim(), "");
+    assert!(compiler.build_args().is_empty());
 }
 
 /// Test 1.4: Validate the top-level CompilerEnum correctly delegates calls.
@@ -56,12 +59,12 @@ fn test_compiler_enum_delegation() {
     assert_eq!(enum_compiler.name(), "VBSP");
     assert_eq!(enum_compiler.description(), "BSP Compiler for Source Engine");
 
-    // Test the delegated build_args as well
     let mut vrad_instance = valve_compilers::vrad::Vrad::new();
     vrad_instance.add_arg(valve_compilers::vrad::VradArg::Fast);
     let vrad_enum = valve_compilers::CompilerEnum::Vrad(vrad_instance);
 
-    assert_eq!(vrad_enum.build_args().trim(), "-fast");
+    let expected: Vec<String> = vec!["-fast".to_string()];
+    assert_eq!(vrad_enum.build_args(), expected);
 }
 
 /// Test 1.5 (Conditional): Test serialization feature.
@@ -84,7 +87,6 @@ fn test_csgo_compatibility() {
     use strum::IntoEnumIterator;
     let current_game_id = 730; // CS:GO
 
-    // Iterate over all possible Vbsp arguments and assert that they are compatible with CS:GO.
     for arg_variant in VbspArg::iter() {
         if arg_variant == VbspArg::AllowDynamicPropsAsStatic {continue;} // only in GMod
         assert!(

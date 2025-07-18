@@ -38,17 +38,38 @@ pub trait Compiler: Default {
         }
     }
 
-    /// Build the final command-line argument string for execution.
-    fn build_args(&self) -> String {
-        self.get_args().iter().map(|arg| arg.as_arg()).collect::<Vec<_>>().join(" ")
+    /// Returns the configured arguments in a structured format.
+    fn get_structured_args(&self) -> Vec<(&'static str, Option<String>)> {
+        self.get_args().iter().map(|arg| arg.as_arg()).collect()
+    }
+
+    /// Builds the final, flattened list of command-line arguments for execution.
+    fn build_args(&self) -> Vec<String> {
+        let structured_args = self.get_structured_args();
+        let mut final_args = Vec::with_capacity(structured_args.len() * 2);
+
+        for (key, value_opt) in structured_args {
+            if !key.is_empty() {
+                final_args.push(key.to_string());
+            }
+
+            if let Some(value) = value_opt {
+                final_args.push(value);
+            }
+        }
+
+        final_args
     }
 
     /// Build the final command-line string for execution using context values.///
     /// If provided, `executable` will be used as the compiler path. Otherwise,
     /// it defaults to `<bin_dir>/<compiler_name>.exe`.
     fn build_command(&self, context: &CompilerContext, executable: Option<PathBuf>) -> CommandInfo {
-        let combined_args = self.build_args();
-        let final_args = context.replace(&combined_args);
+        let final_args = self
+            .build_args()
+            .iter()
+            .map(|arg| context.replace(arg))
+            .collect();
         let resolved_wd = PathBuf::from(context.replace(self.working_dir_template()));
 
         let compiler_path = if let Some(path) = executable {
@@ -77,7 +98,7 @@ pub trait CompilerArg: Sized {
     /// Returns the default value for this argument, if one is defined.
     fn get_default_value(&self) -> Option<Self>;
     /// Formats the argument and its value (if any) into a command-line string.
-    fn as_arg(&self) -> std::borrow::Cow<'static, str>;
+    fn as_arg(&self) -> (&'static str, Option<String>);
     /// Whether this argument is used by the compiler by default.
     fn is_default(&self) -> bool;
 
@@ -222,8 +243,8 @@ pub struct CommandInfo {
     pub name: &'static str,
     /// The path to the compiler executable.
     pub compiler_path: PathBuf,
-    /// The complete, resolved argument string.
-    pub args: String,
+    /// The complete, resolved argument list.
+    pub args: Vec<String>,
     /// The final working directory for the command.
     pub working_dir: PathBuf,
 }

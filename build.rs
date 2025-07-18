@@ -248,22 +248,16 @@ fn generate_compiler_module(config: &CompilerConfig) -> proc_macro2::TokenStream
         let argument = &p.argument;
 
         if p.value_type == ValueType::Flag {
-            return quote! { Self::#variant => #argument.into(), };
+            return quote! { Self::#variant => (#argument, None), }
         }
 
-        let value_display_expr = if p.value_type == ValueType::Path {
-            quote! { val.display() }
+        let value_expr = if p.value_type == ValueType::Path {
+            quote! { val.to_string_lossy() }
         } else {
             quote! { val }
         };
 
-        let format_logic = if argument.is_empty() {
-            quote! { format!("{}", #value_display_expr) }
-        } else {
-            quote! { format!("{} {}", #argument, #value_display_expr) }
-        };
-
-        quote! { Self::#variant(val) => #format_logic.into(), }
+        quote! { Self::#variant(val) => (#argument, Some(#value_expr.to_string())), }
     });
 
     // --- `is_default()` method arms ---
@@ -401,7 +395,7 @@ fn generate_compiler_module(config: &CompilerConfig) -> proc_macro2::TokenStream
                         _ => None,
                     }
                 }
-                fn as_arg(&self) -> std::borrow::Cow<'static, str> {
+                fn as_arg(&self) -> (&'static str, Option<String>) {
                     match self { #(#as_arg_arms)* }
                 }
                 fn is_default(&self) -> bool {
@@ -505,7 +499,7 @@ fn generate_compiler_enum(metadata: &[(String, String)]) -> proc_macro2::TokenSt
             pub fn description(&self) -> &'static str {
                 match self { #(#description_arms)* }
             }
-            pub fn build_args(&self) -> String {
+            pub fn build_args(&self) -> Vec<String> {
                 match self { #(#build_args_arms)* }
             }
             pub fn build_command(&self, context: &CompilerContext, executable: Option<PathBuf>) -> CommandInfo {
