@@ -1,6 +1,6 @@
 [package]
 name = "valve_compilers"
-version = "1.0.0"
+version = "1.1.0"
 edition = "2024"
 authors = ["laVashik <contact@lavashik.lol>"]
 description = "A type-safe, ergonomic, and extensible library for building command-line arguments for Valve's Source Engine compiler tools."
